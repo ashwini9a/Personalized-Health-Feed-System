@@ -1,0 +1,72 @@
+[{
+"Name":"Cindy Allen",
+"Age":"39",
+"Wt":"160",
+"Gender":"Female",
+"Child":"Yes",
+"MStatus":"Married",
+"CaseSummary":"The patient is a 39-year-old female with hypertension (high blood pressure) and type 2 diabetes.",
+"History":"Patient recently saw her physician and comes in with a new prescription for her diabetes medication.",
+"FHistory": "Yes",
+"PHistory": "Hypertension and diabetes.",
+"Medicine": "Metformin 500mg",
+"Education":"12" 
+},
+{
+"Name":"Mike Monroe",
+"Age":"55",
+"Wt":"250",
+"Gender":"Male",
+"Child":"No",
+"MStatus":"Single",
+"CaseSummary":"The patient is a 55-year-old man with hypertension (high blood pressure) and type2 diabetes. He has been a long-time customer of this pharmacy. He is here to pick up refill prescriptions for his diabetes, which has not been well controlled and also presents a new prescription for a burning sensation in his feet.",
+"History":"Has been seeing current doctor at the Family Medicine Clinic for 10 years. Health has been stable and feels well. Patient takes no hypertension medicine.",
+"FHistory": "Yes",
+"PHistory": "Hypertension and diabetes",
+"Medicine": "Desipramine 25mg",
+"Education":"18" 
+}
+,
+{
+"Name":"Cindy Allen3",
+"Age":"12",
+"Wt":"70",
+"Gender":"Female",
+"Child":"Yes",
+"MStatus":"Married",
+"CaseSummary":"The patient is a 39-year-old female with hypertension (high blood pressure) and type 2 diabetes.",
+"History":"Patient recently saw her physician and comes in with a new prescription for her diabetes medication.",
+"FHistory": "Yes",
+"PHistory": "Hypertension and diabetes.",
+"Medicine": "Metformin 500mg",
+"Education":"12" 
+}
+,
+{
+"Name":"Cindy Allen4",
+"Age":"82",
+"Wt":"210",
+"Gender":"Female",
+"Child":"Yes",
+"MStatus":"Married",
+"CaseSummary":"The patient is a 39-year-old female with hypertension (high blood pressure) and type 2 diabetes.",
+"History":"Patient recently saw her physician and comes in with a new prescription for her diabetes medication.",
+"FHistory": "Yes",
+"PHistory": "Hypertension and diabetes.",
+"Medicine": "Metformin 500mg",
+"Education":"12" 
+},
+{
+"Name":"Cindy Allen5",
+"Age":"24",
+"Wt":"120",
+"Gender":"Female",
+"Child":"Yes",
+"MStatus":"Married",
+"CaseSummary":"The patient is a 39-year-old female with hypertension (high blood pressure) and type 2 diabetes.",
+"History":"Patient recently saw her physician and comes in with a new prescription for her diabetes medication.",
+"FHistory": "Yes",
+"PHistory": "Hypertension and diabetes.",
+"Medicine": "Metformin 500mg",
+"Education":"12" 
+}]

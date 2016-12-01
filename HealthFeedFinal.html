@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="js/jquery.js"></script>
+<style>
+#header {
+    background-color:black;
+	width:1600px;
+    color:white;
+    text-align:center;
+    padding:10px;
+}
+#bodysection {
+	display:table;
+	overflow:auto;
+    width:1400px;
+    float:left;
+    padding:10px;	 	 
+}
+#nav {
+	display:table-cell;
+    line-height:30px;
+	border-style: outset;
+	border-color:black;
+    background-color:#eeeeee;
+    height:1000px;
+    width:160px;
+    padding:10px;	      
+}
+#sectionA {
+	height:1000px;
+	border-style: outset;
+	border-color:black;
+	display:table-cell;
+	overflow:auto;
+    width:1200px;   
+    padding:10px;
+	background-color:#eeeeee;	 	 
+}
+#sectionB {
+	border
+	height:1000px;
+	border-style: outset;
+	border-color:black;
+	display:table-cell;
+	background-color:#eeeeee;
+   width: 750px; 
+  margin:5px; 
+  padding: 10px; 
+  	 	 
+}
+#Events {
+	border-style: outset;
+	border-color:black;
+    clear:both;
+	width:1600px;
+     height:200px;
+   padding:10px;	
+   background-color:#eeeeee; 	 
+}
+#Dimage {
+    background-color:#eeeeee;
+    vertical-align:middle; 
+	text-align:center;
+    clear:both;
+	width:1600px;
+     height:150px;
+   padding:10px;	 	 
+}
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+	width:1600px;
+    text-align:center;
+   padding:10px;	 	 
+}
+table
+{
+    table-layout: fixed;
+    width: 1600px;
+	border: 1px solid black;
+}
+
+</style>
+</head>
+<body background-image="images/BG3.jpg">
+
+<div id="header">
+<h1>Personalized Health Feed</h1>
+</div>
+<div id="bodysection">
+<div style="display: table-row">
+
+<div id="nav">
+<h2>
+<nav>
+<a id="patient1" onClick="DisplayPatientData(this.id);" style="cursor: pointer; cursor: hand;">Patient 1</a><br>
+<a id="patient2" onClick="DisplayPatientData(this.id);" style="cursor: pointer; cursor: hand;">Patient 2</a><br>
+<a id="patient3" onClick="DisplayPatientData(this.id);" style="cursor: pointer; cursor: hand;">Patient 3</a><br>
+<a id="patient4" onClick="DisplayPatientData(this.id);" style="cursor: pointer; cursor: hand;">Patient 4</a><br>
+<a id="patient5" onClick="DisplayPatientData(this.id);" style="cursor: pointer; cursor: hand;">Patient 5</a>
+</nav>
+</h2>
+</div>
+
+<div id="sectionA">
+	<h2><center>Select a Patient Profile</center></h2>
+</div>
+
+</div>
+</div>
+<!--<div id="Events">
+	<img src="images/UE.jpg" width="400" height="35" >
+</div>-->
+<div id="Dimage">
+	<img src="images/D1.jpg" width="480" height="150" >
+	<img src="images/Diabetes.jpg" width="580" height="150" >
+    <img src="images/D2.jpg" width="480" height="150" >
+</div>
+<div id="footer">
+Copyright © Personalized Health Feed
+</div>
+<script src="js/jquery.xdomainajax.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+   
+
+<script type="text/javascript">
+var tflag=1;
+var Pcnt=5;
+var PRtags;
+var Qtags;
+var IrDocs;
+var PIRtags;
+var Ptags;
+var PMtags;
+var cid;
+var text;
+var query;
+var text2;
+var flag=0;
+var dataTags;
+var Pdata;
+var Events;
+function saveData(){
+					PMtags='{\"tags\":[]}';
+					//document.getElementById("nav").innerHTML+="wqd"+document.getElementById("tnm").innerHTML+document.getElementById("tnm").value;
+					text[cid].Name=document.getElementById("tnm").value;
+					text[cid].Age=document.getElementById("tdob").value;
+					text[cid].Wt=document.getElementById("tWt").value;
+					text[cid].City=document.getElementById("tcity").value;
+					text[cid].State=document.getElementById("tstate").value;
+					//text[cid].Address=document.getElementById("tadd").value;
+					text[cid].CaseSummary=document.getElementById("tSum").value;
+					text[cid].History=document.getElementById("tHis").value;
+					//text[cid].Fhistory=document.getElementById("tFHis").value;
+					text[cid].Phistory=document.getElementById("tPHis").value;
+					text[cid].Medicine=document.getElementById("tmed").value;
+					text[cid].Education=document.getElementById("tEd").value;
+					if(document.getElementById("Female").checked)
+					{
+						text[cid].Gender="Female";
+					}
+					else if(document.getElementById("male").checked)
+					{
+						text[cid].Gender="Male";
+					}
+					else
+					{text[cid].Gender="Other";}
+					if(document.getElementById("YChild").checked)
+					{
+						text[cid].Child="Yes";
+					}
+					else
+					{text[cid].Child="No";}
+					if(document.getElementById("FHYes").checked)
+					{
+						text[cid].FHistory="Yes";
+					}
+					else
+					{text[cid].FHistory="Yes";}
+					if(document.getElementById("Sing").checked)
+					{
+						text[cid].MStatus="Single";
+					}
+					else
+					{text[cid].MStatus="Married";}
+					jString = JSON.stringify(text);
+	
+	
+	document.getElementById("tnm").readOnly=true;
+	document.getElementById("tdob").readOnly=true;
+	document.getElementById("tWt").readOnly=true;
+	document.getElementById("tcity").readOnly=true;
+	document.getElementById("tstate").readOnly=true;
+	document.getElementById("tSum").readOnly=true;
+	document.getElementById("tHis").readOnly=true;
+//	document.getElementById("tFHis").readOnly=true;
+	document.getElementById("tPHis").readOnly=true;
+	document.getElementById("tmed").readOnly=true;
+	document.getElementById("tEd").readOnly=true;
+	document.getElementById("bsave").disabled=true;
+	document.getElementById("FHYes").disabled = true;
+	document.getElementById("otherg").disabled = true;
+  	document.getElementById("marr").disabled = true;
+  	document.getElementById("NChild").disabled = true;
+  	document.getElementById("male").disabled = true;
+	document.getElementById("Female").disabled = true;	
+	document.getElementById("FHNo").disabled = true;
+  	document.getElementById("Sing").disabled = true;
+  	document.getElementById("YChild").disabled = true;
+  	document.getElementById("Male").disabled = true;
+	generateMoreTags();
+	
+}
+function editData(){
+	document.getElementById("bsave").disabled=false;
+	document.getElementById("FHNo").disabled = false;
+  	document.getElementById("Sing").disabled = false;
+  	document.getElementById("YChild").disabled = false;
+  	document.getElementById("male").disabled = false;
+	document.getElementById("otherg").disabled = false;
+	document.getElementById("FHYes").disabled = false;
+  	document.getElementById("marr").disabled = false;
+  	document.getElementById("NChild").disabled = false;
+  	document.getElementById("Female").disabled = false;	
+	document.getElementById("tnm").readOnly=false;
+	document.getElementById("tWt").readOnly=false;
+	document.getElementById("tcity").readOnly=false;
+	document.getElementById("tstate").readOnly=false;
+	document.getElementById("tdob").readOnly=false;
+	//document.getElementById("tadd").readOnly=false;
+	document.getElementById("tSum").readOnly=false;
+	document.getElementById("tHis").readOnly=false;
+	//document.getElementById("tFHis").readOnly=false;
+	document.getElementById("tPHis").readOnly=false;
+	document.getElementById("tmed").readOnly=false;
+	document.getElementById("tEd").readOnly=false;
+	
+}
+function DisplayPatientData(clicked_id) {
+	if(tflag==1)
+	{
+		PRtags='[{\"tags\":[]},{\"tags\":[]},{\"tags\":[]},{\"tags\":[]},{\"tags\":[]}]';
+		PIRtags='[{\"tags\":[]},{\"tags\":[]},{\"tags\":[]},{\"tags\":[]},{\"tags\":[]}]';
+		IrDocs = '[{\"docs\":[]},{\"docs\":[]},{\"docs\":[]},{\"docs\":[]},{\"docs\":[]}]';
+		Qtags = '{\"tags\":[]}';
+		Ptags = '{\"tags\":[]}';
+		tflag=0;
+	}
+	if(clicked_id=="patient1"){
+        		cid=0;
+			}
+			else if(clicked_id=="patient2"){
+      	  		cid=1;
+			}
+			else if(clicked_id=="patient3"){
+       	 		cid=2;
+			}
+			else if(clicked_id=="patient4"){
+        		cid=3;
+			}
+			else{
+        		cid=4;
+			}
+  if(flag==0){
+		flag=2;
+  
+  
+  var xhttp;
+  if (window.XMLHttpRequest)
+    {
+    
+    	xhttp=new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject)
+    {
+   
+    	xhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+  xhttp.onreadystatechange = function() {
+	  if(xhttp.readyState == 4){
+
+          //      if(xhttp.status==200){
+                    text = JSON.parse(xhttp.responseText);
+					document.getElementById("sectionA").innerHTML ="<button id=\"bsave\" onclick=\"saveData()\" disabled>Save</button><button  id=\"bedit\" onclick=\"editData()\">Edit</button><br><button id=\"bart\" onclick=\"openArticles()\" type=\"button\" >Show Articles</button><table border=\"1\" style=\"width:100%\"><tr><td><Label>Name :</Label></td><td><textarea id=\"tnm\" readonly>"+text[cid].Name+"</textarea></td></tr><br><tr><td><Label>Age :</Label></td><td><textarea id=\"tdob\" readonly>"+text[cid].Age+"</textarea></td></tr><br><tr><td><Label>Weight :</Label></td><td><textarea id=\"tWt\" readonly>"+text[cid].Wt+"</textarea></td></tr><br><tr><td><Label>City :</Label></td><td><textarea id=\"tcity\" readonly>"+text[cid].City+"</textarea></td></tr><br><tr><td><Label>State :</Label></td><td><textarea id=\"tstate\" readonly>"+text[cid].State+"</textarea></td></tr><br><tr><td><Label>Marrital Status :</Label></td><td><input type=\"radio\" id=\"Sing\" name=\"Mstatus\" disabled>Single<br><input type=\"radio\" id=\"marr\" name=\"Mstatus\" disabled>Married<br></td></tr><br><br><tr><td><Label>Gender :</Label></td><td><input type=\"radio\" id=\"Female\" name=\"gender\" disabled>Female<br><input type=\"radio\" id=\"male\" name=\"gender\" disabled>Male<br><input type=\"radio\" id=\"otherg\" name=\"gender\" disabled>Other<br></td></tr><br><br><tr><td><Label>Children of your own ? :</Label></td><td><input type=\"radio\" id=\"YChild\" name=\"Child\" disabled>Yes<br><input type=\"radio\" id=\"NChild\" name=\"Child\" disabled>No<br></td></tr><br><tr><td><Label>Case Summary :</Label></td><td><textarea id=\"tSum\" readonly>"+text[cid].CaseSummary+"</textarea></td></tr><br><tr><td><Label>History :</Label></td><td><textarea id=\"tHis\" readonly>"+text[cid].History+"</textarea></td></tr><br><tr><td><Label>Family history :</Label></td><td><input type=\"radio\" id=\"FHYes\" name=\"fhist\" value=\"1\" disabled>Yes<br><input type=\"radio\" id=\"FHNo\" name=\"fhist\" value=\"0\" disabled>No<br></td></tr><br><tr><td><Label>Past Medical history :</Label></td><td><textarea id=\"tPHis\" readonly>"+text[cid].PHistory+"</textarea></td></tr><br><tr><td><Label>Medicine :</Label></td><td><textarea id=\"tmed\" readonly>"+text[cid].Medicine+"</textarea></td></tr><br><tr><td><Label>Education :</Label></td><td><textarea id=\"tEd\" readonly>"+text[cid].Education+"</textarea></td></tr></table>";
+					dataTags = document.getElementById("tSum").value+" "+document.getElementById("tHis").value+" "+document.getElementById("tPHis").value+" "+document.getElementById("tmed").value;
+					if(text[cid].Gender.localeCompare("Female")==0)
+					{
+						document.getElementById("Female").checked = true;
+					}
+					else if(text[cid].Gender.localeCompare("Male")==0)
+					{
+						document.getElementById("male").checked = true;
+					}
+					else
+					{document.getElementById("otherg").checked = true;}
+					if(text[cid].Child.localeCompare("Yes")==0)
+					{
+						document.getElementById("YChild").checked = true;
+					}
+					else
+					{document.getElementById("NChild").checked = true;}
+					if(text[cid].FHistory.localeCompare("Yes")==0)
+					{
+						document.getElementById("FHYes").checked = true;
+					}
+					else
+					{document.getElementById("FHNo").checked = true;}
+					if(text[cid].MStatus.localeCompare("Single")==0)
+					{
+						document.getElementById("Sing").checked = true;
+					}
+					else
+					{document.getElementById("marr").checked = true;}
+  
+  					
+					PMtags='{\"tags\":[]}';
+					generateMoreTags();
+		//		}
+			}
+			
+  };
+  xhttp.open("GET", "P1.json", true);
+  xhttp.send();
+  }
+  else{
+  document.getElementById("sectionA").innerHTML ="<button id=\"bsave\" onclick=\"saveData()\" disabled>Save</button><button  id=\"bedit\" onclick=\"editData()\">Edit</button><br><button id=\"bart\" onclick=\"openArticles()\" type=\"button\" >Show Articles</button><table border=\"1\" style=\"width:100%\"><tr><td><Label>Name :</Label></td><td><textarea id=\"tnm\" readonly>"+text[cid].Name+"</textarea></td></tr><br><tr><td><Label>Age :</Label></td><td><textarea id=\"tdob\" readonly>"+text[cid].Age+"</textarea></td></tr><br><tr><td><Label>Weight :</Label></td><td><textarea id=\"tWt\" readonly>"+text[cid].Wt+"</textarea></td></tr><br><tr><td><Label>City :</Label></td><td><textarea id=\"tcity\" readonly>"+text[cid].City+"</textarea></td></tr><br><tr><td><Label>State :</Label></td><td><textarea id=\"tstate\" readonly>"+text[cid].State+"</textarea></td></tr><br><tr><td><Label>Marrital Status :</Label></td><td><input type=\"radio\" id=\"Sing\" name=\"Mstatus\" disabled>Single<br><input type=\"radio\" id=\"marr\" name=\"Mstatus\" disabled>Married<br></td></tr><br><br><tr><td><Label>Gender :</Label></td><td><input type=\"radio\" id=\"Female\" name=\"gender\" disabled>Female<br><input type=\"radio\" id=\"male\" name=\"gender\" disabled>Male<br><input type=\"radio\" id=\"otherg\" name=\"gender\" disabled>Other<br></td></tr><br><br><tr><td><Label>Children of your own ? :</Label></td><td><input type=\"radio\" id=\"YChild\" name=\"Child\" disabled>Yes<br><input type=\"radio\" id=\"NChild\" name=\"Child\" disabled>No<br></td></tr><br><tr><td><Label>Case Summary :</Label></td><td><textarea id=\"tSum\" readonly>"+text[cid].CaseSummary+"</textarea></td></tr><br><tr><td><Label>History :</Label></td><td><textarea id=\"tHis\" readonly>"+text[cid].History+"</textarea></td></tr><br><tr><td><Label>Family history :</Label></td><td><input type=\"radio\" id=\"FHYes\" name=\"fhist\" value=\"1\" disabled>Yes<br><input type=\"radio\" id=\"FHNo\" name=\"fhist\" value=\"0\" disabled>No<br></td></tr><br><tr><td><Label>Past Medical history :</Label></td><td><textarea id=\"tPHis\" readonly>"+text[cid].PHistory+"</textarea></td></tr><br><tr><td><Label>Medicine :</Label></td><td><textarea id=\"tmed\" readonly>"+text[cid].Medicine+"</textarea></td></tr><br><tr><td><Label>Education :</Label></td><td><textarea id=\"tEd\" readonly>"+text[cid].Education+"</textarea></td></tr></table>";
+  dataTags = document.getElementById("tSum").value+" "+document.getElementById("tHis").value+" "+document.getElementById("tPHis").value+" "+document.getElementById("tmed").value;
+  if(text[cid].Gender.localeCompare("Female")==0)
+					{
+						document.getElementById("Female").checked = true;
+					}
+					else if(text[cid].Gender.localeCompare("Male")==0)
+					{
+						document.getElementById("male").checked = true;
+					}
+					else
+					{document.getElementById("otherg").checked = true;}
+					if(text[cid].Child.localeCompare("Yes")==0)
+					{
+						document.getElementById("YChild").checked = true;
+					}
+					else
+					{document.getElementById("NChild").checked = true;}
+					if(text[cid].FHistory.localeCompare("Yes")==0)
+					{
+						document.getElementById("FHYes").checked = true;
+					}
+					else
+					{document.getElementById("FHNo").checked = true;}
+					if(text[cid].MStatus.localeCompare("Single")==0)
+					{
+						document.getElementById("Sing").checked = true;
+					}
+					else
+					{document.getElementById("marr").checked = true;}
+					
+					//getPatientTags();	
+					PMtags='{\"tags\":[]}';
+					generateMoreTags();	
+  }
+}
+function relevant(clicked_art)
+{
+	document.getElementById("brel").disabled=true;
+	document.getElementById("birrel").disabled=true;
+	var newtags='{\"tags\":[]}';
+	var ntags = JSON.parse(newtags);
+	var tags = JSON.parse(PRtags);
+	var num = Object.keys(tags[cid].tags).length;
+	var n=Object.keys(text2[clicked_art-1].tags).length;
+	var count=0;
+//	document.getElementById("sectionA").innerHTML +=text2[clicked_art-1].tags+n+" "+num+" "+tags[cid].tags+"//";
+	if(num==0)
+	{
+		tags[cid].tags = text2[clicked_art-1].tags;
+	}
+	else
+	{
+		//newtags = tags[cid].tags;
+		for(i=0;i<n;i++)
+		{
+			var yes=0;
+			var copy=text2[clicked_art-1].tags[i];
+			for(j=0;j<num;j++)
+			{
+				//document.getElementById("sectionA").innerHTML +="<br>"+tags[cid].tags[j]+"////"+text2[clicked_art-1].tags[i];
+				var str1= tags[cid].tags[j];
+				var str2= text2[clicked_art-1].tags[i];
+				if(str1.localeCompare(str2)==0)
+				{
+					yes=1;
+					break;
+				}
+			}
+			if(yes==0)
+			{
+				
+				ntags.tags[count] = copy;
+				count++;
+				//document.getElementById("sectionA").innerHTML += "<br>"+tags[cid].tags+"------"+copy;
+				//add
+			}
+				
+		}
+		var index=0;
+		for(m=num;m<num+count;m++)
+		{
+				
+				tags[cid].tags[m] = ntags.tags[index];
+				//document.getElementById("sectionA").innerHTML +="<br>"+tags[cid].tags[m] +"--->"+ ntags.tags[index];
+				index++;
+		}
+	}
+	
+	PRtags = JSON.stringify(tags);
+//	document.getElementById("sectionA").innerHTML +="------"+tags[cid].tags+"--"+Object.keys(tags[cid].tags).length;
+}
+function irRelevant(clicked_art)
+{
+	document.getElementById("brel").disabled=true;
+	document.getElementById("birrel").disabled=true;
+	var newtags='{\"tags\":[]}';
+	var ntags = JSON.parse(newtags);
+	var tags = JSON.parse(PIRtags);
+	var num = Object.keys(tags[cid].tags).length;
+	var n=Object.keys(text2[clicked_art-1].tags).length;
+	var count=0;
+	//document.getElementById("sectionA").innerHTML +=text2[clicked_art-1].tags+n+" "+num+" "+tags[cid].tags+"//";
+	if(num==0)
+	{
+		tags[cid].tags = text2[clicked_art-1].tags;
+	}
+	else
+	{
+		//newtags = tags[cid].tags;
+		for(i=0;i<n;i++)
+		{
+			var yes=0;
+			var copy=text2[clicked_art-1].tags[i];
+			for(j=0;j<num;j++)
+			{
+				//document.getElementById("sectionA").innerHTML +="<br>"+tags[cid].tags[j]+"////"+text2[clicked_art-1].tags[i];
+				var str1= tags[cid].tags[j];
+				var str2= text2[clicked_art-1].tags[i];
+				if(str1.localeCompare(str2)==0)
+				{
+					yes=1;
+					break;
+				}
+			}
+			if(yes==0)
+			{
+				
+				ntags.tags[count] = copy;
+				count++;
+				//document.getElementById("sectionA").innerHTML += "<br>"+tags[cid].tags+"------"+copy;
+				//add
+			}
+				
+		}
+		var index=0;
+		for(m=num;m<num+count;m++)
+		{
+				
+				tags[cid].tags[m] = ntags.tags[index];
+				//document.getElementById("sectionA").innerHTML +="<br>"+tags[cid].tags[m] +"--->"+ ntags.tags[index];
+				index++;
+		}
+	}
+	
+	PIRtags = JSON.stringify(tags);
+	//document.getElementById("sectionA").innerHTML +="------"+tags[cid].tags+"--"+Object.keys(tags[cid].tags).length;
+	var docs = JSON.parse(IrDocs);
+	var num1 = Object.keys(docs[cid].docs).length;
+	docs[cid].docs[num1] = text2[clicked_art-1].id;
+	IrDocs = JSON.stringify(docs);
+	//document.getElementById("sectionA").innerHTML +="<br>"+docs[cid].docs+"--"+Object.keys(docs[cid].docs).length;
+}
+function DisplayArticle(clicked_art){
+	document.getElementById("sectionA").innerHTML = "<button id=\"bback\" onclick=\"openArticles()\">Back</button><br><h3><center>"+text2[clicked_art-1].title+"</center></h3><br>"+text2[clicked_art-1].text+"<br><br><center><button id=\"brel\" onclick=\"relevant("+clicked_art+")\">Relevant</button><button id=\"birrel\" onclick=\"irRelevant("+clicked_art+")\">Irrelevant</button></center>";
+}
+
+function generateMoreTags(){
+					PMtags='{\"tags\":[]}';
+					var moreTags = JSON.parse(PMtags);
+					count=0;
+					//moretags+="vaginal+oral+yeast+infections+vaginal+thrush+urinary+infections+female+sexual+dysfunction+polycystic+ovary+syndrome";
+					//document.getElementById("nav")+= moretags;
+					if(text[cid].Gender.localeCompare("Female")==0 && parseInt(text[cid].Age)>18)
+					{
+						moreTags.tags[count]="vaginal";
+						count++;
+						moreTags.tags[count]="oral";
+						count++;
+						moreTags.tags[count]="yeast";count++;
+						moreTags.tags[count]="infections";count++;
+						moreTags.tags[count]="vaginal";count++;
+						moreTags.tags[count]="thrush";count++;
+						moreTags.tags[count]="urinary";count++;
+						moreTags.tags[count]="infections";count++;
+						moreTags.tags[count]="female";count++;
+						moreTags.tags[count]="sexual";count++;
+						moreTags.tags[count]="dysfunction";count++;
+						moreTags.tags[count]="polycystic";count++;
+						moreTags.tags[count]="ovary";count++;
+						moreTags.tags[count]="syndrome";
+						count++;
+					}
+					else if(text[cid].Gender.localeCompare("Male")==0 && parseInt(text[cid].Age)<18)
+					{
+						moreTags.tags[count]="erectile";count++;
+						moreTags.tags[count]="sexual+dysfunction";
+						count++;
+					}
+					else
+					{
+						moreTags.tags[count]="something";count++;}
+					
+					if((text[cid].Child.localeCompare("Yes")==0 && text[cid].Gender.localeCompare("Female")==0 && parseInt(text[cid].Age)>20 && parseInt(text[cid].Age)<50) || (text[cid].Child.localeCompare("No")==0 && text[cid].Gender.localeCompare("Female")==0 && parseInt(text[cid].Age)>20 && parseInt(text[cid].Age)<50))
+					{
+						moreTags.tags[count]="pregant";count++;
+						moreTags.tags[count]="pregnancy";
+						count++;
+					}
+					if(parseInt(text[cid].Age)>60)
+					{
+						moreTags.tags[count]="Arthritis";count++
+						moreTags.tags[count]="Cataracts";count++
+						moreTags.tags[count]="blurry vission";count++
+						moreTags.tags[count]="Glaucoma";count++
+						moreTags.tags[count]="Retinopathy";
+						count++;
+					}
+					if(parseInt(text[cid].Age)<17)
+					{
+						moreTags.tags[count]="child";count++;
+						moreTags.tags[count]="children";count++;
+						moreTags.tags[count]="young";count++;
+						moreTags.tags[count]="teen";count++;
+						moreTags.tags[count]="teenage";count++;
+						moreTags.tags[count]="kids";count++;
+						moreTags.tags[count]="infant";
+						count++;
+					}
+					if(parseInt(text[cid].Wt)>200)
+					{
+						moreTags.tags[count]="obese";count++;
+						moreTags.tags[count]="obesity";count++;
+						moreTags.tags[count]="exercise";count++;
+						moreTags.tags[count]="yoga";
+						count++;
+					}
+					if(text[cid].FHistory.localeCompare("Yes")==0)
+					{
+						moreTags.tags[count]="Family history";
+						count++;
+					}
+					
+					if(text[cid].MStatus.localeCompare("Married")==0)
+					{
+						moreTags.tags[count]="sexual dysfunction";
+						count++;
+					}
+					PMtags = JSON.stringify(moreTags);						
+}
+function generateQueryTags()
+{
+	var ntags = JSON.parse(Qtags);
+	var tags = JSON.parse(PRtags);
+	var moretags = JSON.parse(PMtags);
+	var temptags1='{\"tags\":[]}';
+	var temptags = JSON.parse(temptags1);
+	var num = Object.keys(tags[cid].tags).length;
+	var mnum = Object.keys(moretags.tags).length;
+	if(num>0){
+	for(i=0;i<num;i++)
+	{
+		ntags.tags[i]= tags[cid].tags[i];
+	}}
+	//ntags.tags = tags[cid].tags;
+	count=0;
+	for(i=0;i<mnum;i++)
+		{
+			var yes=0;
+			var copy=moretags.tags[i];
+			for(j=0;j<num;j++)
+			{
+				//document.getElementById("sectionA").innerHTML +="<br>"+tags[cid].tags[j]+"////"+text2[clicked_art-1].tags[i];
+				var str1= moretags.tags[i];
+				var str2= ntags.tags[j];
+				if(str1.localeCompare(str2)==0)
+				{
+					yes=1;
+					break;
+				}
+			}
+			if(yes==0)
+			{
+				
+				temptags.tags[count] = copy;
+				count++;
+				//document.getElementById("sectionA").innerHTML += "<br>"+tags[cid].tags+"------"+copy;
+				//add
+			}
+				
+		}
+		var index=0;
+		for(m=num;m<num+count;m++)
+		{
+				
+				ntags.tags[m] = temptags.tags[index];
+				//document.getElementById("sectionA").innerHTML +="<br>"+tags[cid].tags[m] +"--->"+ ntags.tags[index];
+				index++;
+		}
+	    Qtags = JSON.stringify(ntags);
+	
+}
+function getPatientTags() {
+     
+        var username = "s42q9631q8qu";
+        var password = "tl85983onqhe4v3";
+        var url = "https://text.s4.ontotext.com/v1/news";
+        var method = "POST";
+
+        var inputString = dataTags;
+		
+        var postData = {
+            "document": inputString,
+            "documentType": "text/plain"
+        };
+
+        var dataString = JSON.stringify(postData);
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                
+                Pdata = xhr.responseText.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+				/*var ntags = JSON.parse(Ptags);
+				var tags = JSON.parse(data);
+				var num = Object.keys(tags.keyphrasesTfIdf).length;
+				ntags.tags = tags.keyphrasesTfIdf;
+				Ptags = JSON.stringify(ntags);
+    			document.getElementById("nav").innerHTML += "Ptags :"+Ptags;*/
+            }
+        };
+
+        xhr.open(method, url, true);
+        xhr.withCredentials = true;
+        xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("Content-Length", dataString.length);
+        xhr.send(dataString);
+		
+        // remove listener to clean up
+        
+    	
+}
+function UpdateQuery()
+{
+	getPatientTags();
+	var data = JSON.parse(Ptags);
+	var tags = JSON.parse(Pdata);
+	data.tags = tags.keyphrasesTfIdf;
+	Ptags = JSON.stringify(data);
+    //document.getElementById("nav").innerHTML += "Ptags :"+Ptags;
+	var ntags1 = JSON.parse(Ptags);
+	var no = Object.keys(ntags1.tags).length;
+	//document.getElementById("nav").innerHTML +="----Update"+Ptags;
+	for(i=0;i<no;i++)
+	{
+		if(i==0)
+		{
+			query+=ntags1.tags[i]+"^20";
+		}
+		else
+		{
+			query+="+"+ntags1.tags[i]+"^20";
+		}
+	}
+	var ntags = JSON.parse(Qtags);
+	var num = Object.keys(ntags.tags).length;
+	for(i=0;i<num;i++)
+	{
+			query+="+"+ntags.tags[i]+"^15";
+	}
+	var Itags = JSON.parse(PIRtags);
+	var num1 = Object.keys(Itags[cid].tags).length;
+	if(num1>0){
+
+				query+="+(";
+	for(i=0;i<num1;i++)
+	{
+			var yes=0;
+			for(j=0;j<num;j++)
+			{
+				//document.getElementById("sectionA").innerHTML +="<br>"+tags[cid].tags[j]+"////"+text2[clicked_art-1].tags[i];
+				var str1= Itags[cid].tags[i];
+				var str2= ntags.tags[j];
+				if(str1.localeCompare(str2)==0)
+				{
+					yes=1;
+					break;
+				}
+			}
+			if(yes==0)
+			{
+				if(i==0){query+=Itags[cid].tags[i];}
+				else {query+="-"+Itags[cid].tags[i];}
+				
+				
+				//document.getElementById("sectionA").innerHTML += "<br>"+tags[cid].tags+"------"+copy;
+				//add
+			}
+				
+		}
+		query+=")^25";
+	}
+	
+}
+function getEvents()
+{
+	query = "State:"+text[cid].State + "AND"+"City:"+text[cid].City;
+	$.ajax({
+		    url: "",
+		    type: 'GET',
+			dataType: 'jsonp',
+		    jsonp : 'json.wrf',
+		    success: function(res) {
+		        Events = res.response.docs;
+		    },
+			error: function(res){
+				alert("error");
+			}
+		});
+	
+	
+}
+function DisplayEvent(cntE)
+{
+	document.getElementById("sectionA").innerHTML = "<button id=\"bback\" onclick=\"openArticles()\">Back</button><br><h3><center>"+Events[cntE].Event+"</center></h3><br><h4>Date:</h4>"+Events[cntE].date+"<br><h4>Time:</h4>"+Events[cntE].Time+"<br><h4>City:</h4>"+Events[cntE].City+"<br><h4>State:</h4>"+Events[cntE].State;
+	
+}
+
+function openArticles() {
+	
+	var arts=0;
+	generateMoreTags();
+	query="";
+	Qtags = '{\"tags\":[]}';
+	/*************************Call Python code here :Content tagger**************/
+	//getPatientTags();
+	//document.getElementById("nav").innerHTML +="<br>----open"+Ptags+"<br>";
+	//document.getElementById("nav").innerHTML+= query+"+"+moreTags;
+	generateQueryTags();
+	UpdateQuery();
+	//getEvents();
+	document.getElementById("sectionA").innerHTML ="<br>-----"+query+"<br>";
+    document.getElementById("sectionA").innerHTML +="<h2><center><u>Articles and Events for "+text[cid].Name+"</u></center></h2>";
+	//var text;
+	    $.ajax({
+		    url: "http://52.38.71.203:8983/solr/healthfeed/select?q="+query+"%0A&rows=200&wt=json&indent=true",
+		    type: 'GET',
+			dataType: 'jsonp',
+		    jsonp : 'json.wrf',
+		    success: function(res) {
+			//	alert(res.response.docs[1].text);
+		        text2 = res.response.docs;
+				counter =0;
+				//alert(text2);
+				$.each( text2, function( j, doc2 ) {
+				var IRflag=0;
+          		var title = doc2.title;
+          		arts=arts+1;
+				var docs = JSON.parse(IrDocs);
+				//var Eventdocs = JSON.parse(Events);
+				var cntE=0;
+				//var Enum = Object.keys(Eventdocs).length;
+				var num1 = Object.keys(docs[cid].docs).length;
+				if(num1 >0){
+				for(ind=0;ind<num1;ind++)
+				{
+						if((doc2.id).localeCompare(docs[cid].docs[ind])==0)
+						{ IRflag =1; break;	}
+				}}
+				if(IRflag == 0){
+          		$("<br><div style=\"display: inline-block;    font-family:\"Helvetica Neue\", Roboto, \"Segoe UI\", Calibri, sans-serif;    font-size: 12px;    font-weight: bold;    line-height: 16px;    border-color: #eee #ddd #bbb;border-radius: 5px;    border-style: solid;    border-width: 1px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);    margin: 10px 5px;    padding: 16px 16px 16px 16px; max-width: 468px;\" ><a id=\""+arts+"\" onClick=\"DisplayArticle(this.id);\" style=\"cursor: pointer; cursor: hand;\"><h4>"+title+"</h4></a></div>").appendTo("#sectionA");}
+/*				if(counter%5 == 0 && cntE<Enum)
+				{
+					var Ename = Eventsdocs[cntE].Event;	
+					$("<br><div style=\"display: inline-block;    font-family:\"Helvetica Neue\", Roboto, \"Segoe UI\", Calibri, sans-serif;    font-size: 12px;    font-weight: bold;    line-height: 16px;    border-color: #eee #ddd #bbb;border-radius: 5px;    border-style: solid;    border-width: 1px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);    margin: 10px 5px;    padding: 16px 16px 16px 16px; max-width: 468px;\" ><a id=\"E"+cntE+"\" onClick=\"DisplayEvent(cntE);\" style=\"cursor: pointer; cursor: hand;\"><h4>"+Ename+"<I><font color=\"red\">Event</font></I></h4></a></div>").appendTo("#sectionA");	
+					cntE++;
+				}
+      			counter++;*/
+				});
+				
+				//text = res.response.numFound;
+		        // then you can manipulate your text as you wish
+		    },
+			error: function(res){
+				alert("error");
+			}
+		});
+		document.getElementById("sectionA").innerHTML +="</table>";
+}
+
+
+</script>
+</body>
+</html>
